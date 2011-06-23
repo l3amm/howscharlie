@@ -1,0 +1,27 @@
+#as_of {
+	font-size: 10px;
+}
+
+#search-result-status {
+	font-size: 30px;
+}
+
+#search-query {
+	color: #cc6699;
+}
+
+#how_is {
+	font-size: 40px;
+}
+
+.doing_bad {
+	color: red;
+}
+
+.doing_ok {
+	color: yellow;
+}
+
+.doing_good {
+	color: green;
+}

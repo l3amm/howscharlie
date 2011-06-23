@@ -1,0 +1,41 @@
+<% content_for :head do %>
+	<%=javascript_include_tag "raphael-min.js", "g.raphael-min.js", "g.line-min.js" %>
+	
+	<script type="text/javascript" charset="utf-8"> 
+	    window.onload = function () {
+	    	var r = Raphael("holder");
+				var xdata = [<%= @dates.collect { |d| d[0].to_f / 4000000 }.join(",") %>];
+				var ydata = [<%= @sentiment.join(",") %>];
+			 	var linechart = r.g.linechart(30, 10, 800, 400, 
+													xdata, ydata, 
+													{nostroke: false, axis: "0 0 1 1", symbol: "o", smooth: true}).hoverColumn(function () {
+													
+			                   	this.tags = r.set();
+			                   	for (var i = 0, ii = this.y.length; i < ii; i++) {
+			                       this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, {fill: this.symbols[i].attr("fill")}]));
+			                   }
+			               }, function () {
+			                   this.tags && this.tags.remove();
+			               });
+			}
+	</script>
+	
+<% end %>
+
+<div id="search-result-status">
+	<span id="search-query"><%= params[:query] %></span> is doing
+	<span id="how_is" class="<%= @how_is_class %>">
+		<%= @how_is %>
+	</span>
+
+	<span id="as_of">(as of <%= @latest_date %>)</span>
+	
+
+	
+	<div id="holder" style="height: 1450px; width: 1650px"></div>
+</div>
+
+
+Results: <%= @num_matches %><br/><br/>
+<%= @dates %>
+<%= @sentiment %>

@@ -1,0 +1,40 @@
+body {
+	font-size: 12px;
+	font-family: helvetica, arial, sans-serif;
+	background-color: #cdcdcd;
+	margin: 0;
+}
+
+#header {
+	font-size: 100px;
+	padding: 15px;
+}
+
+#header #image {
+	float: left;
+}
+
+#header #title {
+	float: left;
+}
+
+#query {
+	height: 20px;
+}
+
+#wrapper {
+	background-color: white;
+	margin: auto;
+	width: 1000px;
+}
+
+#content {
+	padding: 15px;
+	min-height: 400px;
+}
+
+#footer {
+	padding: 5px;
+	
+	background-color: #cdcdcd;
+}

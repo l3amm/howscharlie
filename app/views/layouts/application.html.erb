@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>how's charlie?</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+	
+	<%= content_for :head %>
+</head>
+<body>
+
+<div id="wrapper">
+	<div id="header">
+		<div id="image"><%= image_tag 'title-image.png', :height => "150" %></div>
+		<div id="title">how's charlie?</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div id="content">
+		<%= yield %>
+	</div>
+	<div id="footer">
+		<div >&copy; haystack (scott woody + thaisan tonthat)
+	</div>
+</div>
+</body>
+</html>
