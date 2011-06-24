@@ -19,16 +19,33 @@ A:visited {
 }
 
 #header {
+	position: relative;
 	font-size: 100px;
 	padding: 15px;
+	left: 120px;
 }
 
 #header #image {
 	float: left;
 }
 
+#header #image img {
+	height: 110px;
+}
+
 #header #title {
 	float: left;
+}
+
+#search-bar {
+	font-size: 14px;
+	text-align: center;
+}
+
+#query-textbox {
+	height: 25px;
+	font-size: 24px;
+	width: 600px;
 }
 
 #query {
@@ -48,6 +65,6 @@ A:visited {
 
 #footer {
 	padding: 5px;
-	
 	background-color: #cdcdcd;
+	padding-bottom: 20px;
 }

@@ -12,16 +12,29 @@
 <body>
 
 <div id="wrapper">
-	<div id="header">
-		<div id="image"><%= image_tag 'title-image.png', :height => "150" %></div>
-		<div id="title">how's charlie?</div>
-		<div style="clear: both;"></div>
-	</div>
+		<a href="/site/index">
+			<div id="header" style="text-align: center">
+				<div id="image"><%= image_tag 'title-image.png'%></div>
+				<div id="title"><%= image_tag 'title.png' %></div>
+				<div style="clear: both;"></div>	
+			</div>
+		</a>
+		<div id="search-bar">
+			<%= form_tag("/site/search") %>
+			<%= text_field_tag "query", nil, :size => "100", :id => "query-textbox"%>
+			<%= submit_tag "Search", :id => "search_button" %>
+		</div>
+		
 	<div id="content">
 		<%= yield %>
 	</div>
 	<div id="footer">
-		<div >&copy; haystack (scott woody + thaisan tonthat)
+		<div style="float: left; color: blue; margin-right: 30px">
+			<%= link_to "home", :action => "index" %> | 
+			<%= link_to "about", :action => "about" %>
+		</div>
+		<div style="float: left;">&copy; haystack (scott woody + thaisan tonthat)</div>
+		<div style="clear: both;">
 	</div>
 </div>
 </body>

@@ -55,9 +55,9 @@
 
 
 <div id="results">
-	<%= @num_matches %>	results: <br/>
+	<%= @num_matches %>	results <br/>
 	<div id="list">
-		<% @search_results.each do |result| %>
+		<% @search_results.reverse.each do |result| %>
 			<div class="result-item">
 				<span class="result-item-date <%=color_code_sentiment(result['sentiment'])%>">
 					<%= Time.at(result["date"].to_i).strftime("%m/%d/%Y")%>
