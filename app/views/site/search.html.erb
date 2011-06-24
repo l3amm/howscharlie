@@ -6,13 +6,15 @@
 
 			
 	    	var r = Raphael("holder");
-				var xdata = [<%= @dates.collect { |d| d[0].to_i / 4000000 }.join(",") %>];
-				var ydata = [<%= @sentiment.join(",") %>];
+				var xdata = [<%= @week_data.collect { |d|  d[0].to_i  }.join(",") %>];
+				var ydata = [<%= @week_data.collect { |d|  d[1].to_f }.join(",") %>];
+				//var xdata = [<%= @dates.collect { |d| d[0].to_i / 4000000 }.join(",") %>];
+				//var ydata = [<%= @sentiment.join(",") %>];
 				var dates = ['<%= @dates.collect { |d| d[1].to_s }.join("','") %>'];
 				var urls = '"<%=@urls.join("\",\"")%>"';
 			 	var linechart = r.g.linechart(30, 10, 500, 400, 
 													xdata, ydata, 
-													{nostroke: false, axis: "0 0 1 0", axisxstep: 5, symbol: "o", smooth: false});
+													{nostroke: false, axis: "0 0 1 0", axisxstep: 1, symbol: "o", smooth: false});
 								
 								
 				// Display info on hover
@@ -33,9 +35,10 @@
 
 			
 				// *** Use formatted dates as axis labels - this is incorrect
-				$.each(linechart.axis[0].text.items, function(index, value) {
-																							this.attr({'text': dates[index]});
-																							});
+				linechart.axis[0].text.items[0].attr({'text': dates[0]});
+				linechart.axis[0].text.items[1].attr({'text': dates[dates.length - 1]});
+				//linechart.axis[0].text.items[dates.length - 1].attr({'text': dates[dates.length - 1]});
+				
 				}
 	</script>
 	

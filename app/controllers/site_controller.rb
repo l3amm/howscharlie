@@ -20,24 +20,26 @@ class SiteController < ApplicationController
     inter = 604800
     start_date = @test_results.first['date'].to_i
     end_date = @test_results.last['date'].to_i
-    week_data = Array.new((end_date - start_date)/inter) 
+    @week_data = Array.new((end_date - start_date)/inter) 
     @test_results.each {|res|
       week = (res['date'].to_i - start_date)/inter
-      if week_data[week].nil?
-        week_data[week] = [res['sentiment'].to_f, [res['docid']]]
+      if @week_data[week].nil?
+        @week_data[week] = [week, res['sentiment'].to_f, [res['docid']]]
       else
-        week_data[week][1].push(res['docid'])
-        week_data[week][0] += res['sentiment'].to_f
+        @week_data[week][2].push(res['docid'])
+        @week_data[week][1] += res['sentiment'].to_f
       end
     }
     
-    week_data.each {|date|
+    @week_data.each {|date|
       if !(date.nil?)
-        date[0] = date[0] / date[1].size
+        date[1] = date[1] / date[2].size
       end
     }
     
-    #render :text => week_data
+    @week_data = @week_data.compact.reject(&:blank?)
+    
+    #render :text => @week_data
     
     @dates = @search_results.collect { |s| [s["date"], Time.at(s["date"].to_i).strftime("%m/%d/%Y")] }
     @sentiment = @search_results.collect { |s| s["sentiment"] }
