@@ -4,6 +4,7 @@
 
 #search-result-status {
 	font-size: 30px;
+	margin-bottom: 30px;
 }
 
 #search-query {
@@ -24,4 +25,16 @@
 
 .doing_good {
 	color: green;
+}
+
+#results { 
+	float: left; 
+	font-size: 24px;
+}
+
+#results #list {
+	height: 350px; 
+	width: 350px;
+	font-size: 14px;
+	overflow-y: scroll;
 }
