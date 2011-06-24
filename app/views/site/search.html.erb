@@ -3,20 +3,40 @@
 	
 	<script type="text/javascript" charset="utf-8"> 
 	    window.onload = function () {
+
+			
 	    	var r = Raphael("holder");
-				var xdata = [<%= @dates.collect { |d| d[0].to_f / 4000000 }.join(",") %>];
+				var xdata = [<%= @dates.collect { |d| d[0].to_i / 4000000 }.join(",") %>];
 				var ydata = [<%= @sentiment.join(",") %>];
+				var dates = ['<%= @dates.collect { |d| d[1].to_s }.join("','") %>'];
+				var urls = '"<%=@urls.join("\",\"")%>"';
 			 	var linechart = r.g.linechart(30, 10, 800, 400, 
 													xdata, ydata, 
-													{nostroke: false, axis: "0 0 1 1", symbol: "o", smooth: true}).hoverColumn(function () {
+													{nostroke: false, axis: "0 0 1 0", axisxstep: 5, symbol: "o", smooth: false}).hoverColumn(function () {
+													
+													//var idx = $.inArray(this.x, xdata);
+													$("#hover").text(this.x);
 													
 			                   	this.tags = r.set();
 			                   	for (var i = 0, ii = this.y.length; i < ii; i++) {
-			                       this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, {fill: this.symbols[i].attr("fill")}]));
+			                       this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, 
+														{fill: this.symbols[i].attr("fill")}]));
 			                   }
 			               }, function () {
 			                   this.tags && this.tags.remove();
 			               });
+			
+			// Use formatted dates as axis labels
+			$.each(linechart.axis[0].text.items, function(index, value) {
+																						this.attr({'text': dates[index]});
+																						});
+				/*
+				function (label) {
+				    originalText = label.attr('text'); 
+				    newText = "hi"
+				    label.attr({'text': newText});
+				});
+				*/
 			}
 	</script>
 	
@@ -29,10 +49,9 @@
 	</span>
 
 	<span id="as_of">(as of <%= @latest_date %>)</span>
-	
-
-	
+	<div id="hover">sdfsa</div>
 	<div id="holder" style="height: 1450px; width: 1650px"></div>
+
 </div>
 
 
