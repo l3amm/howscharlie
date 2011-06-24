@@ -42,7 +42,7 @@ class SiteController < ApplicationController
     @dates = @search_results.collect { |s| [s["date"], Time.at(s["date"].to_i).strftime("%m/%d/%Y")] }
     @sentiment = @search_results.collect { |s| s["sentiment"] }
     @urls = @search_results.collect { |u| u["url"] }
-
+    
     @last_sentiment = @sentiment.last.to_f
     
     if @last_sentiment < -2 then 

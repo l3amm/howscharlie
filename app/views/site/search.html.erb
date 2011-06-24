@@ -10,34 +10,33 @@
 				var ydata = [<%= @sentiment.join(",") %>];
 				var dates = ['<%= @dates.collect { |d| d[1].to_s }.join("','") %>'];
 				var urls = '"<%=@urls.join("\",\"")%>"';
-			 	var linechart = r.g.linechart(30, 10, 800, 400, 
+			 	var linechart = r.g.linechart(30, 10, 500, 400, 
 													xdata, ydata, 
-													{nostroke: false, axis: "0 0 1 0", axisxstep: 5, symbol: "o", smooth: false}).hoverColumn(function () {
-													
-													//var idx = $.inArray(this.x, xdata);
-													$("#hover").text(this.x);
-													
-			                   	this.tags = r.set();
-			                   	for (var i = 0, ii = this.y.length; i < ii; i++) {
-			                       this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, 
-														{fill: this.symbols[i].attr("fill")}]));
-			                   }
-			               }, function () {
-			                   this.tags && this.tags.remove();
-			               });
-			
-			// Use formatted dates as axis labels
-			$.each(linechart.axis[0].text.items, function(index, value) {
-																						this.attr({'text': dates[index]});
-																						});
-				/*
-				function (label) {
-				    originalText = label.attr('text'); 
-				    newText = "hi"
-				    label.attr({'text': newText});
+													{nostroke: false, axis: "0 0 1 0", axisxstep: 5, symbol: "o", smooth: false});
+								
+								
+				// Display info on hover
+				linechart.click(function () {
+				//	$("#hover").text(this.x);
 				});
-				*/
-			}
+						
+				// // Add tags on hover		
+				// linechart.hoverColumn(function () {
+				//          	this.tags = r.set();
+				//          	for (var i = 0, ii = this.y.length; i < ii; i++) {
+				//              this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, 
+				// 	{	fill: this.symbols[i].attr("fill")}]));
+				// 	            }
+				// 	        }, function () {
+				// 	            this.tags && this.tags.remove();
+				// 	        });
+
+			
+				// *** Use formatted dates as axis labels - this is incorrect
+				$.each(linechart.axis[0].text.items, function(index, value) {
+																							this.attr({'text': dates[index]});
+																							});
+				}
 	</script>
 	
 <% end %>
@@ -49,13 +48,23 @@
 	</span>
 
 	<span id="as_of">(as of <%= @latest_date %>)</span>
-	<div id="hover">sdfsa</div>
-	<div id="holder" style="height: 1450px; width: 1650px"></div>
-
 </div>
 
-<%= @test_results%>
 
-Results: <%= @num_matches %><br/><br/>
-<%= @dates %>
-<%= @sentiment %>
+<div id="results">
+	<%= @num_matches %>	results: <br/>
+	<div id="list">
+		<% @search_results.each do |result| %>
+			<div class="result-item">
+				<span class="result-item-date">
+					<%= Time.at(result["date"].to_i).strftime("%m/%d/%Y")%>
+				</span>
+				<span class="result-item-url">
+					<%= result["url"] %>
+				</span>
+			</div>
+		<% end %>
+	</div>
+</div>
+<div id="holder" style="float: left; height: 450px; width: 600px; border-left: 2px #4c4c4c dashed"></div>
+<div style="clear:both;"></div>
