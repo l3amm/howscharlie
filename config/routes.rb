@@ -4,6 +4,7 @@ Howscharlie::Application.routes.draw do
   get "site/about"
   get "site/search"
   post "site/search"
+  get "site/no_results"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
