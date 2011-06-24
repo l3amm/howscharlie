@@ -5,6 +5,19 @@ body {
 	margin: 0;
 }
 
+A:link {
+	text-decoration: none;
+	color: #000000;
+}
+
+A:hover {
+	border-bottom: 2px #bababa dashed;
+}
+
+A:visited {
+	color: black;
+}
+
 #header {
 	font-size: 100px;
 	padding: 15px;

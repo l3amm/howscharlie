@@ -55,11 +55,11 @@
 	<div id="list">
 		<% @search_results.each do |result| %>
 			<div class="result-item">
-				<span class="result-item-date">
+				<span class="result-item-date <%=color_code_sentiment(result['sentiment'])%>">
 					<%= Time.at(result["date"].to_i).strftime("%m/%d/%Y")%>
 				</span>
 				<span class="result-item-url">
-					<%= result["url"] %>
+					<%= link_to result["snippet_text"].html_safe, result["url"] %>
 				</span>
 			</div>
 		<% end %>

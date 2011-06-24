@@ -11,7 +11,7 @@ class SiteController < ApplicationController
     index = api.indexes "howscharlie"
     index.functions(0, "-doc.var[0]").add
     
-    results = index.search(params["query"], :function => 0, :fetch => "*");
+    results = index.search(params["query"], :function => 0, :fetch => "*", :snippet => "text");
 
     @num_matches = results['matches']
     @search_results = results['results']
