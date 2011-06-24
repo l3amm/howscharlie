@@ -15,6 +15,29 @@ class SiteController < ApplicationController
 
     @num_matches = results['matches']
     @search_results = results['results']
+    @test_results = @search_results.sort {|x,y| x['date'] <=> y['date']}
+    #week time interval 
+    inter = 604800
+    start_date = @test_results.first['date'].to_i
+    end_date = @test_results.last['date'].to_i
+    week_data = Array.new((end_date - start_date)/inter) 
+    @test_results.each {|res|
+      week = (res['date'].to_i - start_date)/inter
+      if week_data[week].nil?
+        week_data[week] = [res['sentiment'].to_f, [res['docid']]]
+      else
+        week_data[week][1].push(res['docid'])
+        week_data[week][0] += res['sentiment'].to_f
+      end
+    }
+    
+    week_data.each {|date|
+      if !(date.nil?)
+        date[0] = date[0] / date[1].size
+      end
+    }
+    
+    #render :text => week_data
     
     @dates = @search_results.collect { |s| [s["date"], Time.at(s["date"].to_i).strftime("%m/%d/%Y")] }
     @sentiment = @search_results.collect { |s| s["sentiment"] }
