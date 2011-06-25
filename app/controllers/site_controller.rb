@@ -52,10 +52,10 @@ class SiteController < ApplicationController
     
       @last_sentiment = @sentiment.last.to_f
     
-      if @last_sentiment < -2 then 
+      if @last_sentiment < 0.36 then 
         @how_is = "bad"
         @how_is_class = "doing_bad"
-      elsif @last_sentiment > -2 && @last_sentiment < 2 
+      elsif @last_sentiment > 0.36 && @last_sentiment < 1.58
         @how_is = "ok"
         @how_is_class = "doing_ok"
       else
