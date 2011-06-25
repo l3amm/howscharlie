@@ -14,7 +14,7 @@ class SiteController < ApplicationController
     index = api.indexes "howscharlie_all"
     index.functions(0, "-doc.var[0]").add
     
-    results = index.search(params["query"], :function => 0, :fetch => "*", :snippet => "text");
+    results = index.search(params["query"], :len => 100, :function => 0, :fetch => "*", :snippet => "text");
 
     @num_matches = results['matches']
     @search_results = results['results']
@@ -44,7 +44,7 @@ class SiteController < ApplicationController
     
       @week_data = @week_data.compact.reject(&:blank?)
     
-      #render :text => @week_data
+      #render :text => @test_results.size
     
       @dates = @search_results.collect { |s| [s["date"], Time.at(s["date"].to_i).strftime("%m/%d/%Y")] }
       @sentiment = @search_results.collect { |s| s["sentiment"] }
