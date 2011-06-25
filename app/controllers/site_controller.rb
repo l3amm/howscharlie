@@ -11,7 +11,7 @@ class SiteController < ApplicationController
   def search
     api_url = "http://:0gV8oFvfEuktVu@defgo.api.indextank.com"
     api = IndexTank::Client.new api_url
-    index = api.indexes "super_howscharlie"
+    index = api.indexes "howscharlie_all"
     index.functions(0, "-doc.var[0]").add
     
     results = index.search(params["query"], :function => 0, :fetch => "*", :snippet => "text");
