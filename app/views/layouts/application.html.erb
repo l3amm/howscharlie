@@ -22,7 +22,11 @@
 		</a>
 		<div id="search-bar">
 			<%= form_tag("/site/search") %>
-			<%= text_field_tag "query", nil, :size => "100", :id => "query-textbox"%>
+			<% if action_name != "search"%>
+				<%= text_field_tag "query", nil, :size => "100", :id => "query-textbox", :placeholder => "Type your search here (e.g. Charlie Sheen)"%>
+			<% else %>
+				<%= text_field_tag "query", nil, :size => "100", :id => "query-textbox"%>
+			<% end %>
 			<%= submit_tag "Search", :id => "search_button" %>
 		</div>
 		
