@@ -38,7 +38,8 @@
 	height: 350px; 
 	width: 350px;
 	font-size: 14px;
-	overflow-y: scroll;
+	overflow: auto;
+	!overflow-y: scroll;
 }
 
 .result-item {
@@ -53,3 +54,8 @@
 .result-item-text {
 	
 }
+
+#results-legend {
+	border: 1px #cccddd dashed;
+}
+

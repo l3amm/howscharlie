@@ -56,7 +56,7 @@ class SiteController < ApplicationController
         @how_is = "bad"
         @how_is_class = "doing_bad"
       elsif @last_sentiment > 0.36 && @last_sentiment < 1.58
-        @how_is = "ok"
+        @how_is = "okay"
         @how_is_class = "doing_ok"
       else
         @how_is = "good"

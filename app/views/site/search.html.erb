@@ -2,44 +2,60 @@
 	<%=javascript_include_tag "raphael-min.js", "g.raphael-min.js", "g.line-min.js" %>
 	
 	<script type="text/javascript" charset="utf-8"> 
+		function drawLegend() {
+		  var context = $("#results-legend")[0].getContext("2d");
+			context.fillStyle = "green";
+		  context.fillRect(40, 10, 20, 20);
+			context.fillStyle = "orange";
+		  context.fillRect(140, 10, 20, 20);
+			context.fillStyle = "red";
+		  context.fillRect(240, 10, 20, 20);
+			context.fillStyle = "black"
+			context.textBaseline = "middle";
+			context.font = "18px sans-serif";
+			context.fillText("good", 70, 20);
+			context.fillText("okay", 170, 20);
+			context.fillText("bad", 270, 20);
+		}
+		
 	    window.onload = function () {
-
+			drawLegend();
 			
-	    	var r = Raphael("holder");
-				var xdata = [<%= @week_data.collect { |d|  d[0].to_i  }.join(",") %>];
-				var ydata = [<%= @week_data.collect { |d|  d[1].to_f }.join(",") %>];
-				//var xdata = [<%= @dates.collect { |d| d[0].to_i / 4000000 }.join(",") %>];
-				//var ydata = [<%= @sentiment.join(",") %>];
-				var dates = ['<%= @dates.collect { |d| d[1].to_s }.join("','") %>'];
-				var urls = '"<%=@urls.join("\",\"")%>"';
-			 	var linechart = r.g.linechart(30, 10, 500, 400, 
-													xdata, ydata, 
-													{nostroke: false, axis: "0 0 1 0", axisxstep: 1, symbol: "o", smooth: false});
-								
-								
-				// Display info on hover
-				linechart.click(function () {
-				//	$("#hover").text(this.x);
-				});
-						
-				// // Add tags on hover		
-				// linechart.hoverColumn(function () {
-				//          	this.tags = r.set();
-				//          	for (var i = 0, ii = this.y.length; i < ii; i++) {
-				//              this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, 
-				// 	{	fill: this.symbols[i].attr("fill")}]));
-				// 	            }
-				// 	        }, function () {
-				// 	            this.tags && this.tags.remove();
-				// 	        });
+    	var r = Raphael("holder");
+			var xdata = [<%= @week_data.collect { |d|  d[0].to_i  }.join(",") %>];
+			var ydata = [<%= @week_data.collect { |d|  d[1].to_f }.join(",") %>];
+			//var xdata = [<%= @dates.collect { |d| d[0].to_i / 4000000 }.join(",") %>];
+			//var ydata = [<%= @sentiment.join(",") %>];
+			var dates = ['<%= @dates.collect { |d| d[1].to_s }.join("','") %>'];
+			var urls = '"<%=@urls.join("\",\"")%>"';
+		 	var linechart = r.g.linechart(30, 10, 500, 400, 
+												xdata, ydata, 
+												{nostroke: false, axis: "0 0 1 0", axisxstep: 1, symbol: "o", smooth: false});
+							
+							
+			// Display info on hover
+			linechart.click(function () {
+			//	$("#hover").text(this.x);
+			});
+					
+			// // Add tags on hover		
+			// linechart.hoverColumn(function () {
+			//          	this.tags = r.set();
+			//          	for (var i = 0, ii = this.y.length; i < ii; i++) {
+			//              this.tags.push(r.g.tag(this.x, this.y[i], xdata[i], 0, 10).insertBefore(this).attr([{fill: "#fff"}, 
+			// 	{	fill: this.symbols[i].attr("fill")}]));
+			// 	            }
+			// 	        }, function () {
+			// 	            this.tags && this.tags.remove();
+			// 	        });
 
+		
+			// *** Use formatted dates as axis labels - this is incorrect
+			linechart.axis[0].text.items[0].attr({'text': dates[0]});
+			linechart.axis[0].text.items[1].attr({'text': dates[dates.length - 1]});
+			//linechart.axis[0].text.items[dates.length - 1].attr({'text': dates[dates.length - 1]});
 			
-				// *** Use formatted dates as axis labels - this is incorrect
-				linechart.axis[0].text.items[0].attr({'text': dates[0]});
-				linechart.axis[0].text.items[1].attr({'text': dates[dates.length - 1]});
-				//linechart.axis[0].text.items[dates.length - 1].attr({'text': dates[dates.length - 1]});
-				
-				}
+			}
 	</script>
 	
 <% end %>
@@ -55,7 +71,11 @@
 
 
 <div id="results">
-	<%= @num_matches %>	results <br/>
+	<%= @num_matches %>	results
+	<div>
+		<canvas id="results-legend" height="40" width="345">
+		</canvas>
+	</div>
 	<div id="list">
 		<% @search_results.reverse.each do |result| %>
 			<div class="result-item">
