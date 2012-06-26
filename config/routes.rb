@@ -2,6 +2,7 @@ Howscharlie::Application.routes.draw do
   get "site/index"
   post "site/index"
   get "site/about"
+  get "site/careers"
   get "site/search"
   post "site/search"
   get "site/no_results"

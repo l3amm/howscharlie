@@ -8,6 +8,10 @@ class SiteController < ApplicationController
   def no_results
   end
   
+  def careers
+    
+  end
+  
   def search
     api_url = "http://:0gV8oFvfEuktVu@defgo.api.indextank.com"
     api = IndexTank::Client.new api_url

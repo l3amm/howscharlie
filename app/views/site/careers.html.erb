@@ -1,0 +1,29 @@
+<script type="text/javascript">
+      function getParam(name) {    
+        name = name.replace(/[[]/,"[").replace(/[]]/,"]");    
+        var regexS = "[?&]"+name+"=([^&#]*)";    
+        var regex = new RegExp( regexS );   
+        var results = regex.exec( window.location.href );    
+        if( results == null )
+          return "";    
+        else
+          return results[1];
+      }
+      function resizeIframe(height) {
+        document.getElementById("foundry-local-iframe").height = parseInt(height)+60;
+        document.getElementById("foundry-local-iframe").width = "100%";
+      }
+      function loadSource() {
+        console.log("reloading source");
+        href = window.location.href;
+        re = /repl=no/;
+      if (href.match(re)) {
+         var height = getParam("height");
+         parent.parent.resizeIframe(height);    
+      } else {      
+         document.getElementById("foundry-local-iframe").src = "http://www.foundry.es/job_board/59087fb5-5452-4878-94eb-76119133f828?site_url=localhost:3001/site/careers&embedded=true"    
+       }  
+      }  
+      window.onload = loadSource;
+</script>
+<iframe frameborder="0" id="foundry-local-iframe" height="1" width="801px"></iframe>
